@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./app.css";
 import FormInput from "./components/FormInput";
+import axios from "axios";
 
 const App = () => {
   const [values, setValues] = useState({
@@ -70,6 +71,24 @@ const App = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const handleApi = () => {
+    // console.log({ })
+    axios.post('https://reqres.in/api/login', {
+      // username: values.username,
+      email:values.email,
+      // birthday: values.birthday,
+      password: values.password,
+      // confirmPassword: values.confirmPassword,
+    }).then(result => {
+      console.log(result.data)
+      alert('success')
+    })
+      .catch(error => {
+        alert('service error')
+        console.log(error)
+      })
+  }
+
   return (
     <div className="app">
       <form onSubmit={handleSubmit}>
@@ -82,7 +101,7 @@ const App = () => {
             onChange={onChange}
           />
         ))}
-        <button>Submit</button>
+        <button onClick={handleApi}>Submit</button>
       </form>
     </div>
   );
